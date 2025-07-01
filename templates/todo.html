@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'todo.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <title>Todo App</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>TODO</span>
+        </div>
+        <div class="user">
+            {% if user.is_authenticated %}
+                <i class="fa-solid fa-user"></i>
+                <span>{{user.username}}</span>
+                <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
+            {% else %}
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Login</span>
+            {% endif %}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="todo-container">
+        <div class="input-field">
+            <form action="{% url 'add_todo' %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Enter task" name="todo" required>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div class="todo-list">
+            {% for task in tasks %}
+            <div class="list-item">
+                <p>{{task.task}}</p>
+                <div class="btns">
+                    <button class="prior">set prior</button>
+                    <form action="{% url 'delete' task.id %}" method='post'>
+                        {% csrf_token %}
+                        <button class="del" type="submit">delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="login-section">
+        <div class="head">
+            <h1>Login</h1>
+        </div>
+        <div class="user-inputs">
+            <form method="post" action="{% url 'signin' %}" novalidate>
+                {% csrf_token %}
+                <div class="fields">
+                    <div class="username">
+                        {{form.username.label_tag}}
+                        {{form.username}}
+                    </div>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <span>*{{error}}</span>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="password">
+                        {{form.password.label_tag}}
+                        {{form.password}}
+                    </div>
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <span>*{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="btn">
+                    <button type="submit">Login</button>
+                </div>
+                <p>New user? <a href="{% url 'signup' %}">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
