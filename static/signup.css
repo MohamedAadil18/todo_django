@@ -1,38 +1,43 @@
-*{
+* {
     padding: 0%;
     margin: 0%;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-body{
+
+body {
     height: 100vh;
     width: 100vw;
     background-color: #2a2b42;
     color: #ffffff;
 }
-.signup{
+
+.signup {
     width: 40%;
     height: max-content;
     box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5);
     position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     padding-bottom: 30px;
 }
-.signup .head{
+
+.signup .head {
     text-align: center;
     padding: 20px 0px;
 }
-.signup form{
+
+.signup form {
     padding-top: 30px;
     width: 100%;
     height: max-content;
 }
+
 .signup form .username,
 .signup form .password,
 .signup form .re-password,
-.signup form .btn{
+.signup form .btn {
     width: 80%;
     text-align: center;
     margin: auto;
@@ -49,7 +54,8 @@ body{
     border: none;
     outline: none;
 }
-.signup form .btn button{
+
+.signup form .btn button {
     width: max-content;
     padding: 7px 20px;
     font-size: 1.3rem;
@@ -59,10 +65,25 @@ body{
     cursor: pointer;
     background-color: green;
     color: #ffffff;
-    &:hover{
+
+    &:hover {
         background-color: rgb(7, 97, 7);
     }
 }
-.signup form span{
+
+.signup form span {
     color: red;
+}
+
+@media screen and (max-width:600px) {
+    .signup {
+        width: 90%;
+    }
+
+    .signup form .username,
+    .signup form .password,
+    .signup form .re-password,
+    .signup form .btn {
+        width: 100%;
+    }
 }
