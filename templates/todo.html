@@ -29,25 +29,38 @@
     {% if user.is_authenticated %}
     <div class="todo-container">
         <div class="input-field">
+            {% if update %}
+            <form action="{% url 'update_todo' todo.id %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Enter task" name="task" value="{{todo.task}}" required>
+                <button type="submit">update</button>
+            </form>
+            {% else %}
             <form action="{% url 'add_todo' %}" method="post">
                 {% csrf_token %}
                 <input type="text" placeholder="Enter task" name="todo" required>
                 <button type="submit">Add</button>
+            {% endif %}
             </form>
         </div>
         <div class="todo-list">
-            {% for task in tasks %}
-            <div class="list-item">
-                <p>{{task.task}}</p>
-                <div class="btns">
-                    <button class="prior">set prior</button>
-                    <form action="{% url 'delete' task.id %}" method='post'>
-                        {% csrf_token %}
-                        <button class="del" type="submit">delete</button>
-                    </form>
+            <div class="todo-list-container">
+                {% for task in tasks %}
+                <div class="list-item">
+                    <p>{{task.task}}</p>
+                    <div class="btns">
+                        <form action="{% url 'update' task.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="edit">edit</button>
+                        </form>
+                        <form action="{% url 'delete' task.id %}" method='post'>
+                            {% csrf_token %}
+                            <button class="del" type="submit">delete</button>
+                        </form>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
     {% else %}

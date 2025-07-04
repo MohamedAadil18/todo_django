@@ -47,10 +47,27 @@ def add_todo(request):
         task = request.POST.get('todo')
         TodoTasks.objects.create(user = request.user, task = task)
         return redirect('home')
-    
+
 def remove_task(request, id):
     if request.method == 'POST':
-        print('delete')
         get_object_or_404(TodoTasks, id=id).delete()
         return redirect('home')
     return redirect('home')
+
+def update_task(request, id):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        todo = get_object_or_404(TodoTasks, id=id)
+        tasks = TodoTasks.objects.filter(user=request.user)
+        return render(request, 'todo.html', {'form' : form,
+            'tasks': tasks,
+            'todo':todo,
+            'update':True,
+        })
+def update_todo(request, id):
+    if request.method == 'POST':
+        task = request.POST.get('task')
+        todo = get_object_or_404(TodoTasks, id=id)
+        todo.task = task
+        todo.save()
+        return redirect('home')
