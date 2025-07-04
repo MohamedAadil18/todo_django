@@ -51,11 +51,11 @@
                     <div class="btns">
                         <form action="{% url 'update' task.id %}" method="post">
                             {% csrf_token %}
-                            <button class="edit">edit</button>
+                            <button class="edit">EDIT</button>
                         </form>
                         <form action="{% url 'delete' task.id %}" method='post'>
                             {% csrf_token %}
-                            <button class="del" type="submit">delete</button>
+                            <button class="del" type="submit">DELETE</button>
                         </form>
                     </div>
                 </div>
